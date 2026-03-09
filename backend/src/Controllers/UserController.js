@@ -1,3 +1,5 @@
+import { User } from "../Models/User"
+
 export const GetAllUsers = async(req,res)=>{
     try {
         res.status(200).json({message:"This is user data function"})
@@ -9,7 +11,7 @@ export const GetAllUsers = async(req,res)=>{
 export const Register = async(req,res)=>{
     try {
         const {username,password,email} = req.body
-        
+        const newUser = new User({username,password,email})
     } catch (error) {
         res.status(500).json({message:"ERROR SERVER"})
     }
