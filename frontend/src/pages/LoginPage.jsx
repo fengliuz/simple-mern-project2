@@ -26,7 +26,6 @@ const LoginPage = () => {
   };
   return (
     <>
-      <Navbar></Navbar>
 
       <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <div className="card w-full max-w-sm shadow-2xl bg-base-100">
