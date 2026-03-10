@@ -50,7 +50,7 @@ app.get(
     failureRedirect: "http://localhost:5173/login?error=failed",
   }),
   (req, res) => {
-    res.redirect("http://localhost:5173/dashboard");
+    res.redirect("http://localhost:5173/");
   },
 );
 app.listen(process.env.PORT, () => {

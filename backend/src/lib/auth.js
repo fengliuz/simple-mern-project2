@@ -20,8 +20,8 @@ passport.use(
             email: profile.emails[0].value,
             avatar: profile.photos[0].value,
           });
-          return cb(null, user);
         }
+        return cb(null, user);
       } catch (error) {
         return cb(null, error);
       }

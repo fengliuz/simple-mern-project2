@@ -70,3 +70,20 @@ export const LoginManual = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const Logout = async(req,res)=>{
+    req.logout((err)=>{
+        if(err){
+            return res.status(400).json({message:"Logout failed"})
+        }
+        
+        req.session.destroy((err)=>{
+            if(err){
+                return res.status(400).json({message:"Destroy dession failed"})
+            }
+
+        res.clearCookie('connect.sid')
+        res.status(200).json({message:"Logout successfull"})
+        })
+    })
+}
