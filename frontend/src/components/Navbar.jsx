@@ -12,7 +12,7 @@ const Navbar = ({onSelectedTheme}) => {
     "forest","coffee","sunset","dracula","night","synthwave","halloween"
   ]
   return (
-    <nav className="navbar bg-base-100 shadow-sm">
+    <nav className="navbar bg-secondary shadow-sm">
       <div className="flex-1 text-xl font-bold">Gudang App</div>
       <div className="flex-none">
         {user ? (
@@ -32,27 +32,23 @@ const Navbar = ({onSelectedTheme}) => {
               >
                 Logout <LogOutIcon />
               </button>
-              <div className="fab fab-flower">
-                {/* a focusable div with tabIndex is necessary to work on all browsers. role="button" is necessary for accessibility */}
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-lg btn-circle btn-success"
-                >
-                  F
-                </div>
-
-                {/* Main Action button replaces the original button when FAB is open */}
-                <button className="fab-main-action btn btn-circle btn-lg">
-                  <PaletteIcon />
-                </button>
-
-                {/* buttons that show up when FAB is open */}
-                <button className="btn btn-lg btn-circle">A</button>
-                <button className="btn btn-lg btn-circle">B</button>
-                <button className="btn btn-lg btn-circle">C</button>
-                <button className="btn btn-lg btn-circle">D</button>
+                 <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button" className="btn m-1">
+                <PaletteIcon />
               </div>
+              <ul
+                tabIndex="-1"
+                className="dropdown-content menu bg-base-100/50 rounded-box z-1 w-52 p-2 shadow-sm"
+              >
+              {themes.map((t)=>(
+                <li key={t}>
+                    <button  onClick={()=>onSelectedTheme(`${t}`)}>
+                        {t}
+                    </button>
+                </li>
+              ))}
+              </ul>
+            </div>
             </div>
           </div>
         ) : (

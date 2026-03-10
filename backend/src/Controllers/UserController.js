@@ -47,7 +47,14 @@ export const LoginManual = async (req, res) => {
         message: "Email or Password you entered is incorrect!",
       });
     }
+    if(user.googleId && !user.password){
+        return res.status(400).json({
+          message: "Email still dont have password and you must login via Google first!",
+        });
+
+    }
     const isMatch = await bcrypt.compare(password, user.password);
+
     if (isMatch) {
       req.login(user, (err) => {
         if (err) {
