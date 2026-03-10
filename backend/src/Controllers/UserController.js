@@ -1,4 +1,4 @@
-import { User } from "../Models/User"
+import { User } from "../Models/User.js"
 
 export const GetAllUsers = async(req,res)=>{
     try {
