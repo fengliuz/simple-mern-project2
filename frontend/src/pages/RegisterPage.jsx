@@ -1,66 +1,65 @@
 import { useState } from "react";
 import api from "../lib/api";
-import toast, { LoaderIcon } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../lib/AuthContext";
-
-const LoginPage = () => {
-  const { checkAuth } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const handleManualLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await api.post("/login", { email, password });
-      await checkAuth();
-      toast.success(res.data.message);
-      navigate("/");
-    } catch (error) {
-      toast.error("Error, " + (error.response.data.message || "server error"));
+const RegisterPage = () => {
+    const [username,setUsername] = useState("")
+    const {checkAuth} = useAuth()
+    const [email,setEmail] = useState("")
+    const [password,setPassword] = useState("")
+    const navigate = useNavigate()
+    const handleManualRegister = async(e)=>{
+        e.preventDefault()
+        try {
+            const res = await api.post("/register",{username,email,password})
+            await checkAuth()
+            toast.success(res.data.message)
+            navigate("/")
+        } catch (error) {
+            toast.error("Error, "+(error.response.data.message || "server error"))
+        }
     }
-  };
-  const handleGoogleLogin = async () => {
-    window.location.href = "http://localhost:5001/auth/google";
-  };
+    const handleGoogleRegister = async()=>{
+        window.location.href="http://localhost:5001/auth/google"
+    }
   return (
     <>
-      <Navbar></Navbar>
-
+    <Navbar></Navbar>
       <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <div className="card w-full max-w-sm shadow-2xl bg-base-100">
           <div className="card-body">
-            <h1 className=" text-3xl font-bold text-center text-primary mb-4">
-              Login Form
+            <h1 className=" text-3xl font-bold text-center text-secondary mb-4">
+              Register Form
             </h1>
-            <form action="" onSubmit={handleManualLogin}>
-              {/* <div className="form-control">
+            <form action="" onSubmit={handleManualRegister}>
+              <div className="form-control">
                 <label htmlFor="username" className="label">
                   <span className="label-text">Username:</span>
                 </label>
                 <input
                   type="text"
                   placeholder="your username"
-                  className=" input input-bordered focus:input-primary"
+                  className=" input input-bordered focus:input-secondary"
                   required
                   value={username}
                   onChange={(e)=>setUsername(e.target.value)}
                   autoFocus
                 />
-              </div> */}
+              </div>
               <div className="form-control">
                 <label htmlFor="email" className="label">
                   <span className="label-text">Email:</span>
                 </label>
                 <input
-                  type="input"
+                  type="email"
                   placeholder="email@example.com"
-                  className=" input input-bordered focus:input-primary"
+                  className=" input input-bordered focus:input-secondary"
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                  onChange={(e)=>setEmail(e.target.value)}
+                  />
               </div>
               <div className="form-control">
                 <label htmlFor="password" className="label">
@@ -68,31 +67,23 @@ const LoginPage = () => {
                 </label>
                 <input
                   type="password"
-                  className="input input-bordered focus:input-primary"
+                  className="input input-bordered focus:input-secondary"
                   placeholder="Your password"
                   required
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e)=>setPassword(e.target.value)}
                 />
               </div>
               <div className="flex form-control mt-6 px-auto">
-                <button className="btn btn-primary w-full hover:text-white">
+                <button className="btn btn-secondary w-full hover:text-white">
                   Login
                 </button>
               </div>
             </form>
-            <Link
-              className=" flex max-h-1 justify-center py-8 hover:text-primary transition duration-200  "
-              to={`/register`}
-            >
-              Don't have an account? Register
-            </Link>
+                <Link className=" flex max-h-1 justify-center py-8 hover:text-secondary transition duration-200  " to={`/login`}>Already have an account? Login</Link>
             <div className=" divider text-sm text-base-content/50">OR</div>
-            <div className="form-control flex justify-end">
-              <button
-                onClick={handleGoogleLogin}
-                className="btn-outline hover:btn-secondary hover:btn-soft btn btn-primary cursor-pointer "
-              >
+            <div className="form-control flex justify-end"  >
+              <button onClick={handleGoogleRegister} className="btn-outline hover:btn-primary hover:btn-soft btn btn-secondary cursor-pointer ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -111,4 +102,4 @@ const LoginPage = () => {
     </>
   );
 };
-export default LoginPage;
+export default RegisterPage;
