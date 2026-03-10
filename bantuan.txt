@@ -1,0 +1,49 @@
+Schema
+username , 
+//eslint-disable-next-linex
+email lowercase unique 
+password required function(){return !this.googleId}
+googleId sparse true
+avatar string
+
+lib auth
+import passport
+import {Strategy as GoogleStrategy} from "passport-google-oauth2"
+
+passport.use(
+    new GoogleStrategy(
+        {
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret,
+            callbackURL
+        }
+    ),
+    async function(accessToken,refreshToken,profile,cb){
+        try{
+            let user = await User.findOne({googleId:profile.id})
+            if(!user){
+                user = await User.create({
+                    googleId:profile.id,
+                    username: profile.given_name || profile.displayName,
+                    email:profile.emails[0].value,
+                    avatar:profile.photos[0].value
+                })
+                return cb(null,user)
+            }
+        }
+    }
+)
+
+passport .serializeUser((user,done))
+passport.deserializeUser(async(id,done))
+
+app.use(session({
+    secret:"",
+    resave,saveUninitialized,cookie{secure}
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.get('/ath/glg',passport.authenticate("google",{scope}))
+app.get('callback',passport.authenticate("google",{failureRedirect}),(req,res))
